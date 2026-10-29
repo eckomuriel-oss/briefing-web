@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full bg-slate-900 text-slate-100">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Briefing de Proyecto Web</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts: Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Custom CSS for smooth transitions and mobile tap highlight removal */
+    * {
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    .step-content {
+      display: none;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    .step-content.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* Custom checkbox and radio styles */
+    .selectable-card {
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .selectable-card.selected {
+      border-color: #6366f1;
+      background-color: rgba(99, 102, 241, 0.12);
+      box-shadow: 0 0 15px rgba(99, 102, 241, 0.2);
+    }
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0f172a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body class="h-full bg-slate-900 text-slate-100 font-sans antialiased flex flex-col justify-between selection:bg-brand-500 selection:text-white">
+
+  <!-- Main Container -->
+  <div class="min-h-full flex flex-col justify-between max-w-2xl mx-auto w-full px-4 py-6 sm:px-6 sm:py-8">
+    
+    <!-- Top Header -->
+    <header class="text-center mb-6">
+      <div class="inline-flex items-center gap-2 bg-brand-500/10 border border-brand-500/30 text-brand-500 px-3 py-1 rounded-full text-xs font-semibold tracking-wide uppercase mb-3">
+        <i class="fa-solid fa-wand-magic-sparkles text-xs"></i> Questionnaire Web
+      </div>
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">Briefing de Proyecto Web</h1>
+      <p class="text-xs sm:text-sm text-slate-400 mt-1 max-w-md mx-auto">
+        Ayúdanos a comprender tus necesidades para diseñar la página web ideal para tu negocio. <br class="hidden sm:inline"><span class="text-brand-500 font-medium">Tiempo estimado: 5 minutos.</span>
+      </p>
+
+      <!-- Progress Bar & Stepper Indicator -->
+      <div class="mt-6">
+        <div class="flex justify-between items-center text-xs font-medium text-slate-400 mb-2 px-1">
+          <span id="stepIndicator">Paso 1 de 4</span>
+          <span id="stepPercent" class="text-brand-500 font-bold">25% completado</span>
+        </div>
+        <div class="w-full bg-slate-800 rounded-full h-2 overflow-hidden p-0.5 border border-slate-700/50">
+          <div id="progressBar" class="bg-gradient-to-r from-brand-500 to-indigo-400 h-full rounded-full transition-all duration-300 ease-out" style="width: 25%"></div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Form Area -->
+    <main class="flex-grow flex flex-col">
+      <form id="briefingForm" onsubmit="return false;" class="flex-grow flex flex-col">
+
+        <!-- SECTION 1: Contacto y Negocio -->
+        <div id="step1" class="step-content active space-y-5">
+          <div class="border-b border-slate-800 pb-3">
+            <h2 class="text-lg font-bold text-white flex items-center gap-2">
+              <span class="flex items-center justify-center w-7 h-7 rounded-lg bg-brand-500/20 text-brand-500 text-xs font-black">1</span>
+              Contacto y Negocio
+            </h2>
+            <p class="text-xs text-slate-400 mt-1">Cuéntanos sobre ti y tu empresa.</p>
+          </div>
+
+          <div class="space-y-4">
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5" for="nombreEmpresa">
+                Nombre de la empresa o proyecto <span class="text-rose-500">*</span>
+              </label>
+              <input type="text" id="nombreEmpresa" required placeholder="Ej. Acma Studio, Panadería El Sol"
+                class="w-full bg-slate-800/80 border border-slate-700 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 text-white rounded-xl px-4 py-3 text-sm placeholder-slate-500 outline-none transition-all">
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5" for="personaContacto">
+                  Persona de contacto <span class="text-rose-500">*</span>
+                </label>
+                <input type="text" id="personaContacto" required placeholder="Tu nombre completo"
+                  class="w-full bg-slate-800/80 border border-slate-700 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 text-white rounded-xl px-4 py-3 text-sm placeholder-slate-500 outline-none transition-all">
+              </div>
+
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5" for="whatsapp">
+                  WhatsApp / Teléfono <span class="text-rose-500">*</span>
+                </label>
+                <input type="tel" id="whatsapp" required placeholder="+52 1 55 1234 5678"
+                  class="w-full bg-slate-800/80 border border-slate-700 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 text-white rounded-xl px-4 py-3 text-sm placeholder-slate-500 outline-none transition-all">
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5" for="email">
+                Correo Electrónico <span class="text-rose-500">*</span>
+              </label>
+              <input type="email" id="email" required placeholder="ejemplo@empresa.com"
+                class="w-full bg-slate-800/80 border border-slate-700 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 text-white rounded-xl px-4 py-3 text-sm placeholder-slate-500 outline-none transition-all">
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5" for="giroEmpresa">
+                ¿A qué se dedica tu empresa y qué vendes? <span class="text-rose-500">*</span>
+              </label>
+              <textarea id="giroEmpresa" rows="3" required placeholder="Breve descripción de tus productos o servicios principales..."
+                class="w-full bg-slate-800/80 border border-slate-700 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 text-white rounded-xl px-4 py-3 text-sm placeholder-slate-500 outline-none transition-all resize-none"></textarea>
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5" for="clienteIdeal">
+                ¿Quién es tu cliente ideal?
+              </label>
+              <input type="text" id="clienteIdeal" placeholder="Ej. Jóvenes de 25-40 años, Empresas B2B, Familias..."
+                class="w-full bg-slate-800/80 border border-slate-700 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 text-white rounded-xl px-4 py-3 text-sm placeholder-slate-500 outline-none transition-all">
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 2: Objetivos y Alcance -->
+        <div id="step2" class="step-content space-y-5">
+          <div class="border-b border-slate-800 pb-3">
+            <h2 class="text-lg font-bold text-white flex items-center gap-2">
+              <span class="flex items-center justify-center w-7 h-7 rounded-lg bg-brand-500/20 text-brand-500 text-xs font-black">2</span>
+              Objetivos y Alcance
+            </h2>
+            <p class="text-xs text-slate-400 mt-1">¿Qué quieres lograr con esta nueva web?</p>
+          </div>
+
+          <!-- Goal Selection -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
+              Objetivo Principal (Selecciona uno)
+            </label>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5" id="objetivoRadioGroup">
+              
+              <label class="selectable-card cursor-pointer border border-slate-700/80 bg-slate-800/50 hover:bg-slate-800 rounded-xl p-3 flex items-start gap-3 transition-all selected">
+                <input type="radio" name="objetivoPrincipal" value="Generar prospectos y cotizaciones" checked class="hidden">
+                <div class="p-2 bg-indigo-500/20 text-indigo-400 rounded-lg shrink-0 mt-0.5">
+                  <i class="fa-solid fa-bullhorn text-sm"></i>
+                </div>
+                <div>
+                  <div class="text-sm font-semibold text-white">Prospectos / Leads</div>
+                  <div class="text-xs text-slate-400">Captar clientes y solicitudes de cotización.</div>
+                </div>
+              </label>
+
+              <label class="selectable-card cursor-pointer border border-slate-700/80 bg-slate-800/50 hover:bg-slate-800 rounded-xl p-3 flex items-start gap-3 transition-all">
+                <input type="radio" name="objetivoPrincipal" value="Vender productos en línea (E-commerce)" class="hidden">
+                <div class="p-2 bg-emerald-500/20 text-emerald-400 rounded-lg shrink-0 mt-0.5">
+                  <i class="fa-solid fa-cart-shopping text-sm"></i>
+                </div>
+                <div>
+                  <div class="text-sm font-semibold text-white">Ventas en Línea</div>
+                  <div class="text-xs text-slate-400">Vender productos con pagos por la web.</div>
+                </div>
+              </label>
+
+              <label class="selectable-card cursor-pointer border border-slate-700/80 bg-slate-800/50 hover:bg-slate-800 rounded-xl p-3 flex items-start gap-3 transition-all">
+                <input type="radio" name="objetivoPrincipal" value="Presencia de marca y credibilidad" class="hidden">
+                <div class="p-2 bg-amber-500/20 text-amber-400 rounded-lg shrink-0 mt-0.5">
+                  <i class="fa-solid fa-award text-sm"></i>
+                </div>
+                <div>
+                  <div class="text-sm font-semibold text-white">Presencia de Marca</div>
+                  <div class="text-xs text-slate-400">Mostrar profesionalismo e información.</div>
+                </div>
+              </label>
+
+              <label class="selectable-card cursor-pointer border border-slate-700/80 bg-slate-800/50 hover:bg-slate-800 rounded-xl p-3 flex items-start gap-3 transition-all">
+                <input type="radio" name="objetivoPrincipal" value="Agendar citas o reservas" class="hidden">
+                <div class="p-2 bg-sky-500/20 text-sky-400 rounded-lg shrink-0 mt-0.5">
+                  <i class="fa-solid fa-calendar-check text-sm"></i>
+                </div>
+                <div>
+                  <div class="text-sm font-semibold text-white">Reservas / Citas</div>
+                  <div class="text-xs text-slate-400">Agendar reuniones o servicios automáticamente.</div>
+                </div>
+              </label>
+
+            </div>
+          </div>
+
+          <!-- Required Sections Checkboxes -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
+              Secciones necesarias (Puedes elegir varias)
+            </label>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+              
+              <label class="selectable-card cursor-pointer border border-slate-700/80 bg-slate-800/50 rounded-xl p-2.5 flex items-center gap-2.5 text-xs text-slate-200 font-medium selected">
+                <input type="checkbox" name="secciones" value="Inicio (Home)" checked class="hidden">
+                <i class="fa-solid fa-check text-brand-500 text-xs"></i>
+                Inicio (Home)
+              </label>
+
+              <label class="selectable-card cursor-pointer border border-slate-700/80 bg-slate-800/50 rounded-xl p-2.5 flex items-center gap-2.5 text-xs text-slate-200 font-medium selected">
+                <input type="checkbox" name="secciones" value="Nosotros / Empresa" checked class="hidden">
+                <i class="fa-solid fa-check text-brand-500 text-xs"></i>
+                Nosotros
+              </label>
+
+              <label class="selectable-card cursor-pointer border border-slate-700/80 bg-slate-800/50 rounded-xl p-2.5 flex items-center gap-2.5 text-xs text-slate-200 font-medium selected">
+                <input type="checkbox" name="secciones" value="Servicios / Productos" checked class="hidden">
+                <i class="fa-solid fa-check text-brand-500 text-xs"></i>
+                Servicios
+              </label>
+
+              <label class="selectable-card cursor-pointer border border-slate-700/80 bg-slate-800/50 rounded-xl p-2.5 flex items-center gap-2.5 text-xs text-slate-200 font-medium selected">
+                <input type="checkbox" name="secciones" value="Contacto" checked class="hidden">
+                <i class="fa-solid fa-check text-brand-500 text-xs"></i>
+                Contacto
+              </label>
+
+              <label class="selectable-card cursor-pointer border border-slate-700/80 bg-slate-800/50 rounded-xl p-2.5 flex items-center gap-2.5 text-xs text-slate-200 font-medium">
+                <input type="checkbox" name="secciones" value="Blog / Noticias" class="hidden">
+                <i class="fa-solid fa-check text-transparent text-xs"></i>
+                Blog / Noticias
+              </label>
+
+              <label class="selectable-card cursor-pointer border border-slate-700/80 bg-slate-800/50 rounded-xl p-2.5 flex items-center gap-2.5 text-xs text-slate-200 font-medium">
+                <input type="checkbox" name="secciones" value="Preguntas Frecuentes (FAQ)" class="hidden">
+                <i class="fa-solid fa-check text-transparent text-xs"></i>
+                Preguntas (FAQ)
+              </label>
+
+              <label class="selectable-card cursor-pointer border border-slate-700/80 bg-slate-800/50 rounded-xl p-2.5 flex items-center gap-2.5 text-xs text-slate-200 font-medium">
+                <input type="checkbox" name="secciones" value="Testimonios / Clientes" class="hidden">
+                <i class="fa-solid fa-check text-transparent text-xs"></i>
+                Testimonios
+              </label>
+
+              <label class="selectable-card cursor-pointer border border-slate-700/80 bg-slate-800/50 rounded-xl p-2.5 flex items-center gap-2.5 text-xs text-slate-200 font-medium">
+                <input type="checkbox" name="secciones" value="Galería de Fotos/Proyectos" class="hidden">
+                <i class="fa-solid fa-check text-transparent text-xs"></i>
+                Galería
+              </label>
+
+              <label class="selectable-card cursor-pointer border border-slate-700/80 bg-slate-800/50 rounded-xl p-2.5 flex items-center gap-2.5 text-xs text-slate-200 font-medium">
+                <input type="checkbox" name="secciones" value="Tienda Online / Catálogo" class="hidden">
+                <i class="fa-solid fa-check text-transparent text-xs"></i>
+                Tienda / Catálogo
+              </label>
+
+            </div>
+          </div>
+
+          <!-- Languages -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
+              Idiomas requeridos
+            </label>
+            <div class="flex flex-wrap gap-2">
+              <label class="selectable-card cursor-pointer border border-slate-700/80 bg-slate-800/50 rounded-xl px-3 py-2 flex items-center gap-2 text-xs text-slate-200 selected">
+                <input type="checkbox" name="idiomas" value="Español" checked class="hidden">
+                <i class="fa-solid fa-check text-brand-500 text-xs"></i> Español
+              </label>
+              <label class="selectable-card cursor-pointer border border-slate-700/80 bg-slate-800/50 rounded-xl px-3 py-2 flex items-center gap-2 text-xs text-slate-200">
+                <input type="checkbox" name="idiomas" value="Inglés" class="hidden">
+                <i class="fa-solid fa-check text-transparent text-xs"></i> Inglés
+              </label>
+              <label class="selectable-card cursor-pointer border border-slate-700/80 bg-slate-800/50 rounded-xl px-3 py-2 flex items-center gap-2 text-xs text-slate-200">
+                <input type="checkbox" name="idiomas" value="Otro" class="hidden">
+                <i class="fa-solid fa-check text-transparent text-xs"></i> Otro
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 3: Diseño y Materiales -->
+        <div id="step3" class="step-content space-y-5">
+          <div class="border-b border-slate-800 pb-3">
+            <h2 class="text-lg font-bold text-white flex items-center gap-2">
+              <span class="flex items-center justify-center w-7 h-7 rounded-lg bg-brand-500/20 text-brand-500 text-xs font-black">3</span>
+              Diseño y Contenido
+            </h2>
+            <p class="text-xs text-slate-400 mt-1">Materiales visuales e inspiración.</p>
+          </div>
+
+          <!-- Brand Identity -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
+              ¿Cuentas con Identidad de Marca (Logotipo y colores)?
+            </label>
+            <div class="space-y-2" id="identidadGroup">
+              <label class="selectable-card cursor-pointer border border-slate-700/80 bg-slate-800/50 rounded-xl p-3 flex items-center gap-3 text-xs text-slate-200 selected">
+                <input type="radio" name="identidadVisual" value="Tengo logotipo completo, colores y fuentes" checked class="hidden">
+                <i class="fa-solid fa-circle-dot text-brand-500 text-sm"></i>
+                Sí, tengo logotipo vectorizado, colores y tipografías.
+              </label>
+              <label class="selectable-card cursor-pointer border border-slate-700/80 bg-slate-800/50 rounded-xl p-3 flex items-center gap-3 text-xs text-slate-200">
+                <input type="radio" name="identidadVisual" value="Tengo logotipo pero necesito apoyo con colores/estilo" class="hidden">
+                <i class="fa-regular fa-circle text-slate-500 text-sm"></i>
+                Tengo logotipo pero necesito definir colores/estilo.
+              </label>
+              <label class="selectable-card cursor-pointer border border-slate-700/80 bg-slate-800/50 rounded-xl p-3 flex items-center gap-3 text-xs text-slate-200">
+                <input type="radio" name="identidadVisual" value="No tengo logotipo (requiero diseño de marca)" class="hidden">
+                <i class="fa-regular fa-circle text-slate-500 text-sm"></i>
+                No tengo logotipo (Requiero diseño de identidad).
+              </label>
+            </div>
+          </div>
+
+          <!-- Content and Photos -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
+              ¿Cuentas con textos y fotografías?
+            </label>
+            <div class="space-y-2" id="contenidoGroup">
+              <label class="selectable-card cursor-pointer border border-slate-700/80 bg-slate-800/50 rounded-xl p-3 flex items-center gap-3 text-xs text-slate-200 selected">
+                <input type="radio" name="contenidoStatus" value="Tengo textos e imágenes listas" checked class="hidden">
+                <i class="fa-solid fa-circle-dot text-brand-500 text-sm"></i>
+                Tengo todo listo (Textos redactados y fotos propias).
+              </label>
+              <label class="selectable-card cursor-pointer border border-slate-700/80 bg-slate-800/50 rounded-xl p-3 flex items-center gap-3 text-xs text-slate-200">
+                <input type="radio" name="contenidoStatus" value="Tengo textos pero necesito imágenes de stock" class="hidden">
+                <i class="fa-regular fa-circle text-slate-500 text-sm"></i>
+                Tengo textos pero requeriré fotos de banco de imágenes.
+              </label>
+              <label class="selectable-card cursor-pointer border border-slate-700/80 bg-slate-800/50 rounded-xl p-3 flex items-center gap-3 text-xs text-slate-200">
+                <input type="radio" name="contenidoStatus" value="Necesito apoyo redactando contenidos (Copywriting)" class="hidden">
+                <i class="fa-regular fa-circle text-slate-500 text-sm"></i>
+                Necesito ayuda redactando los textos (Copywriting).
+              </label>
+            </div>
+          </div>
+
+          <!-- Reference Sites -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5" for="ejemplosReferencia">
+              Sitios web de referencia o competencia (Links)
+            </label>
+            <textarea id="ejemplosReferencia" rows="2" placeholder="Pega aquí 1 o 2 enlaces de páginas web que te gusten en diseño o estructura..."
+              class="w-full bg-slate-800/80 border border-slate-700 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 text-white rounded-xl px-4 py-3 text-sm placeholder-slate-500 outline-none transition-all resize-none"></textarea>
+          </div>
+        </div>
+
+        <!-- SECTION 4: Aspectos Técnicos -->
+        <div id="step4" class="step-content space-y-5">
+          <div class="border-b border-slate-800 pb-3">
+            <h2 class="text-lg font-bold text-white flex items-center gap-2">
+              <span class="flex items-center justify-center w-7 h-7 rounded-lg bg-brand-500/20 text-brand-500 text-xs font-black">4</span>
+              Detalles Técnicos e Integraciones
+            </h2>
+            <p class="text-xs text-slate-400 mt-1">Infraestructura y herramientas adicionales.</p>
+          </div>
+
+          <!-- Hosting and Domain -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
+              ¿Cuentas con Dominio (.com, .mx) y Hosting?
+            </label>
+            <div class="space-y-2" id="hostingGroup">
+              <label class="selectable-card cursor-pointer border border-slate-700/80 bg-slate-800/50 rounded-xl p-3 flex items-center gap-3 text-xs text-slate-200 selected">
+                <input type="radio" name="hostingStatus" value="Ya tengo dominio y hosting contratados" checked class="hidden">
+                <i class="fa-solid fa-circle-dot text-brand-500 text-sm"></i>
+                Sí, ya tengo dominio y hosting comprados.
+              </label>
+              <label class="selectable-card cursor-pointer border border-slate-700/80 bg-slate-800/50 rounded-xl p-3 flex items-center gap-3 text-xs text-slate-200">
+                <input type="radio" name="hostingStatus" value="Tengo dominio pero me falta hosting" class="hidden">
+                <i class="fa-regular fa-circle text-slate-500 text-sm"></i>
+                Tengo el dominio pero me falta el hosting.
+              </label>
+              <label class="selectable-card cursor-pointer border border-slate-700/80 bg-slate-800/50 rounded-xl p-3 flex items-center gap-3 text-xs text-slate-200">
+                <input type="radio" name="hostingStatus" value="No tengo ninguno / Necesito asesoría" class="hidden">
+                <i class="fa-regular fa-circle text-slate-500 text-sm"></i>
+                No tengo ninguno / Requiero asesoría para comprarlos.
+              </label>
+            </div>
+          </div>
+
+          <!-- Special Integrations -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
+              Integraciones adicionales
+            </label>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <label class="selectable-card cursor-pointer border border-slate-700/80 bg-slate-800/50 rounded-xl p-2.5 flex items-center gap-2.5 text-xs text-slate-200 selected">
+                <input type="checkbox" name="integraciones" value="Botón directo de WhatsApp" checked class="hidden">
+                <i class="fa-solid fa-check text-brand-500 text-xs"></i>
+                Botón flotante de WhatsApp
+              </label>
+
+              <label class="selectable-card cursor-pointer border border-slate-700/80 bg-slate-800/50 rounded-xl p-2.5 flex items-center gap-2.5 text-xs text-slate-200">
+                <input type="checkbox" name="integraciones" value="Pasarela de pagos (Stripe/PayPal/MercadoPago)" class="hidden">
+                <i class="fa-solid fa-check text-transparent text-xs"></i>
+                Pasarela de Pagos Online
+              </label>
+
+              <label class="selectable-card cursor-pointer border border-slate-700/80 bg-slate-800/50 rounded-xl p-2.5 flex items-center gap-2.5 text-xs text-slate-200">
+                <input type="checkbox" name="integraciones" value="Sistema de citas / Calendario" class="hidden">
+                <i class="fa-solid fa-check text-transparent text-xs"></i>
+                Calendario de Citas
+              </label>
+
+              <label class="selectable-card cursor-pointer border border-slate-700/80 bg-slate-800/50 rounded-xl p-2.5 flex items-center gap-2.5 text-xs text-slate-200">
+                <input type="checkbox" name="integraciones" value="Conexión con CRM / Email Marketing" class="hidden">
+                <i class="fa-solid fa-check text-transparent text-xs"></i>
+                Conexión CRM / Mailchimp
+              </label>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5" for="comentariosExtra">
+              ¿Comentarios adicionales o notas para el diseñador?
+            </label>
+            <textarea id="comentariosExtra" rows="2" placeholder="Cualquier detalle extra que sea importante considerar..."
+              class="w-full bg-slate-800/80 border border-slate-700 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 text-white rounded-xl px-4 py-3 text-sm placeholder-slate-500 outline-none transition-all resize-none"></textarea>
+          </div>
+        </div>
+
+        <!-- SUMMARY & SEND OPTIONS (Step 5) -->
+        <div id="step5" class="step-content space-y-5">
+          <div class="border-b border-slate-800 pb-3 text-center">
+            <div class="inline-flex items-center justify-center w-12 h-12 bg-emerald-500/20 text-emerald-400 rounded-2xl mb-2 text-xl">
+              <i class="fa-solid fa-check-double"></i>
+            </div>
+            <h2 class="text-xl font-bold text-white">¡Briefing completado!</h2>
+            <p class="text-xs text-slate-400 mt-1">Elige cómo deseas enviarnos tus respuestas.</p>
+          </div>
+
+          <!-- Summary Box -->
+          <div class="bg-slate-800/90 border border-slate-700/80 rounded-2xl p-4 space-y-3 max-h-56 overflow-y-auto text-xs text-slate-300" id="summaryBox">
+            <!-- Dynamically populated -->
+          </div>
+
+          <!-- Send Actions -->
+          <div class="space-y-2.5 pt-2">
+            <button type="button" onclick="sendViaWhatsApp()" 
+              class="w-full bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 text-white font-bold py-3.5 px-4 rounded-xl flex items-center justify-center gap-2.5 shadow-lg shadow-emerald-600/20 transition-all text-sm">
+              <i class="fa-brands fa-whatsapp text-lg"></i>
+              Enviar respuestas por WhatsApp
+            </button>
+
+            <button type="button" onclick="copyToClipboard()" 
+              class="w-full bg-slate-800 hover:bg-slate-700 active:bg-slate-800 border border-slate-700 text-white font-semibold py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-all text-sm">
+              <i class="fa-regular fa-copy text-slate-400"></i>
+              Copiar respuestas al portapapeles
+            </button>
+          </div>
+        </div>
+
+      </form>
+    </main>
+
+    <!-- Bottom Navigation Buttons -->
+    <footer class="mt-8 pt-4 border-t border-slate-800 flex items-center justify-between gap-3">
+      <button type="button" id="prevBtn" onclick="navigateStep(-1)" disabled
+        class="bg-slate-800 text-slate-400 hover:bg-slate-700 disabled:opacity-30 disabled:pointer-events-none font-semibold px-4 py-2.5 rounded-xl text-xs sm:text-sm flex items-center gap-2 transition-all">
+        <i class="fa-solid fa-arrow-left text-xs"></i> Anterior
+      </button>
+
+      <button type="button" id="nextBtn" onclick="navigateStep(1)"
+        class="bg-brand-600 hover:bg-brand-500 active:bg-brand-700 text-white font-bold px-6 py-2.5 rounded-xl text-xs sm:text-sm flex items-center gap-2 shadow-lg shadow-brand-600/20 transition-all">
+        Siguiente <i class="fa-solid fa-arrow-right text-xs"></i>
+      </button>
+    </footer>
+
+  </div>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="fixed bottom-5 left-1/2 -translate-x-1/2 bg-slate-800 border border-slate-700 text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2.5 opacity-0 pointer-events-none transition-all duration-300 z-50">
+    <i class="fa-solid fa-circle-check text-emerald-400 text-sm"></i>
+    <span id="toastMsg">Respuestas copiadas al portapapeles</span>
+  </div>
+
+  <script>
+    let currentStep = 1;
+    const totalSteps = 4; // Step 5 is summary
+
+    // Card selection interactive handling
+    document.addEventListener('DOMContentLoaded', () => {
+      setupSelectableCards();
+    });
+
+    function setupSelectableCards() {
+      // Radios
+      document.querySelectorAll('input[type="radio"]').forEach(radio => {
+        radio.addEventListener('change', (e) => {
+          const groupName = e.target.name;
+          document.querySelectorAll(`input[name="${groupName}"]`).forEach(r => {
+            const card = r.closest('.selectable-card');
+            if (card) {
+              card.classList.remove('selected');
+              const icon = card.querySelector('.fa-circle-dot, .fa-circle');
+              if (icon) {
+                icon.className = 'fa-regular fa-circle text-slate-500 text-sm';
+              }
+            }
+          });
+
+          const currentCard = e.target.closest('.selectable-card');
+          if (currentCard) {
+            currentCard.classList.add('selected');
+            const icon = currentCard.querySelector('.fa-regular');
+            if (icon) {
+              icon.className = 'fa-solid fa-circle-dot text-brand-500 text-sm';
+            }
+          }
+        });
+      });
+
+      // Checkboxes
+      document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+        checkbox.addEventListener('change', (e) => {
+          const card = e.target.closest('.selectable-card');
+          if (card) {
+            const checkIcon = card.querySelector('.fa-check');
+            if (e.target.checked) {
+              card.classList.add('selected');
+              if (checkIcon) checkIcon.classList.replace('text-transparent', 'text-brand-500');
+            } else {
+              card.classList.remove('selected');
+              if (checkIcon) checkIcon.classList.replace('text-brand-500', 'text-transparent');
+            }
+          }
+        });
+      });
+    }
+
+    function validateCurrentStep() {
+      if (currentStep === 1) {
+        const empresa = document.getElementById('nombreEmpresa').value.trim();
+        const contacto = document.getElementById('personaContacto').value.trim();
+        const whatsapp = document.getElementById('whatsapp').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const giro = document.getElementById('giroEmpresa').value.trim();
+
+        if (!empresa || !contacto || !whatsapp || !email || !giro) {
+          showToast('Por favor completa todos los campos obligatorios (*)', 'warning');
+          return false;
+        }
+      }
+      return true;
+    }
+
+    function navigateStep(direction) {
+      if (direction === 1 && !validateCurrentStep()) return;
+
+      const newStep = currentStep + direction;
+      if (newStep < 1 || newStep > 5) return;
+
+      // Hide active step
+      document.getElementById(`step${currentStep}`).classList.remove('active');
+
+      currentStep = newStep;
+
+      // Show new step
+      document.getElementById(`step${currentStep}`).classList.add('active');
+
+      // Update UI Stepper & Progress
+      updateUI();
+
+      // Scroll smoothly to top of container
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function updateUI() {
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      const stepIndicator = document.getElementById('stepIndicator');
+      const stepPercent = document.getElementById('stepPercent');
+      const progressBar = document.getElementById('progressBar');
+
+      if (currentStep <= totalSteps) {
+        stepIndicator.innerText = `Paso ${currentStep} de ${totalSteps}`;
+        const pct = Math.round((currentStep / totalSteps) * 100);
+        stepPercent.innerText = `${pct}% completado`;
+        progressBar.style.width = `${pct}%`;
+
+        prevBtn.disabled = currentStep === 1;
+        prevBtn.classList.remove('hidden');
+        nextBtn.classList.remove('hidden');
+        nextBtn.innerHTML = currentStep === totalSteps ? 'Finalizar <i class="fa-solid fa-check text-xs"></i>' : 'Siguiente <i class="fa-solid fa-arrow-right text-xs"></i>';
+      } else {
+        // Summary step
+        stepIndicator.innerText = `Revisión Final`;
+        stepPercent.innerText = `100% completado`;
+        progressBar.style.width = `100%`;
+
+        prevBtn.classList.remove('hidden');
+        prevBtn.disabled = false;
+        nextBtn.classList.add('hidden');
+
+        buildSummary();
+      }
+    }
+
+    function getSelectedCheckboxes(name) {
+      const checked = document.querySelectorAll(`input[name="${name}"]:checked`);
+      return Array.from(checked).map(c => c.value);
+    }
+
+    function getSelectedRadio(name) {
+      const radio = document.querySelector(`input[name="${name}"]:checked`);
+      return radio ? radio.value : 'No especificado';
+    }
+
+    function generateFormattedBriefing() {
+      const empresa = document.getElementById('nombreEmpresa').value.trim();
+      const contacto = document.getElementById('personaContacto').value.trim();
+      const whatsapp = document.getElementById('whatsapp').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const giro = document.getElementById('giroEmpresa').value.trim();
+      const clienteIdeal = document.getElementById('clienteIdeal').value.trim() || 'No especificado';
+
+      const objetivo = getSelectedRadio('objetivoPrincipal');
+      const secciones = getSelectedCheckboxes('secciones').join(', ') || 'Ninguna seleccionada';
+      const idiomas = getSelectedCheckboxes('idiomas').join(', ') || 'Español';
+
+      const identidad = getSelectedRadio('identidadVisual');
+      const contenido = getSelectedRadio('contenidoStatus');
+      const referencias = document.getElementById('ejemplosReferencia').value.trim() || 'Sin referencias';
+
+      const hosting = getSelectedRadio('hostingStatus');
+      const integraciones = getSelectedCheckboxes('integraciones').join(', ') || 'Ninguna';
+      const comentarios = document.getElementById('comentariosExtra').value.trim() || 'Sin comentarios adicionales';
+
+      const text = `📋 *BRIEFING DE PROYECTO WEB*
+
+1️⃣ *DATOS DEL CLIENTE*
+• *Empresa/Proyecto:* ${empresa}
+• *Contacto:* ${contacto}
+• *WhatsApp:* ${whatsapp}
+• *Correo:* ${email}
+• *Giro/Servicios:* ${giro}
+• *Cliente Ideal:* ${clienteIdeal}
+
+2️⃣ *OBJETIVOS Y ALCANCE*
+• *Objetivo Principal:* ${objetivo}
+• *Secciones:* ${secciones}
+• *Idiomas:* ${idiomas}
+
+3️⃣ *DISEÑO Y CONTENIDO*
+• *Identidad Visual:* ${identidad}
+• *Contenido/Fotos:* ${contenido}
+• *Referencias:* ${referencias}
+
+4️⃣ *ASPECTOS TÉCNICOS*
+• *Dominio y Hosting:* ${hosting}
+• *Integraciones:* ${integraciones}
+• *Notas Extra:* ${comentarios}`;
+
+      return text;
+    }
+
+    function buildSummary() {
+      const formatted = generateFormattedBriefing();
+      const summaryBox = document.getElementById('summaryBox');
+      
+      // Convert linebreaks to HTML
+      summaryBox.innerHTML = formatted
+        .replace(/\n/g, '<br>')
+        .replace(/\*(.*?)\*/g, '<strong class="text-white">$1</strong>');
+    }
+
+    function sendViaWhatsApp() {
+      const briefingText = generateFormattedBriefing();
+      const encodedText = encodeURIComponent(briefingText);
+      window.open(`https://api.whatsapp.com/send?text=${encodedText}`, '_blank');
+    }
+
+    function copyToClipboard() {
+      const briefingText = generateFormattedBriefing();
+      
+      // Use fallback execCommand for maximum compatibility inside embeds
+      const textarea = document.createElement('textarea');
+      textarea.value = briefingText;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      
+      try {
+        document.execCommand('copy');
+        showToast('¡Respuestas copiadas al portapapeles!');
+      } catch (err) {
+        showToast('Error al copiar automáticamente', 'warning');
+      } finally {
+        document.body.removeChild(textarea);
+      }
+    }
+
+    function showToast(message, type = 'success') {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toastMsg');
+      const icon = toast.querySelector('i');
+
+      toastMsg.innerText = message;
+      if (type === 'warning') {
+        icon.className = 'fa-solid fa-circle-exclamation text-amber-400 text-sm';
+      } else {
+        icon.className = 'fa-solid fa-circle-check text-emerald-400 text-sm';
+      }
+
+      toast.classList.remove('opacity-0', 'pointer-events-none');
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'pointer-events-none');
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
